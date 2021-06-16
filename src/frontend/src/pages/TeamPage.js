@@ -1,6 +1,7 @@
 // Read about useEffect: https://blog.logrocket.com/guide-to-react-useeffect-hook/
 
 import {React, useEffect, useState} from 'react';
+import {useParams} from 'react-router-dom';
 import { MatchDetailCard } from '../components/MatchDetailCard';
 import { MatchSmallCard } from '../components/MatchSmallCard';
 
@@ -8,20 +9,24 @@ import { MatchSmallCard } from '../components/MatchSmallCard';
 export const TeamPage = () => {
 
   const [team, setTeam] = useState({matches: []}); //set an initial empty default value
+  const {teamName} = useParams();
 
   useEffect(
     () => {
       const fetchMatches = async () => {
-        const response = await fetch('http://localhost:8080/team/Chennai Super Kings');
+        const response = await fetch(`http://localhost:8080/team/${teamName}`);
         const data = await response.json(); 
         setTeam(data);
         // console.log(team.teamName);
         // console.log(data);
       };
       fetchMatches();
-    }, [] //I am saying call this only on first page load
+    }, [teamName] //I am saying call this when teamName changes
   );
 
+  if(!team || !team.teamName){
+    return <h1>Team Not Found</h1>;
+  }
 
   return (
     <div className="TeamPage">
