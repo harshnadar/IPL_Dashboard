@@ -33,7 +33,7 @@ export const TeamPage = () => {
       <h1>{team.teamName}</h1>
       <MatchDetailCard match ={team.matches[0]}/>
       {/* slice because we want three entries in small card. so it'll be mathes[1:4]*/}
-      {team.matches.slice(1).map(match => <MatchSmallCard match = {match} />)} 
+      {team.matches.slice(1).map(match => <MatchSmallCard teamName = {team.teamName} match = {match} />)} 
       
     </div>
   );
